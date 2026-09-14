@@ -2,35 +2,11 @@
   "posts": [
     {
       "id": "P001",
-      "title": "Probability Notes & Foundations",
-      "description": "Important formulas, Bayes' theorem, discrete distributions, and conditional probability concepts.",
-      "content": "# Probability Notes & Foundations\n\nProbability theory provides the mathematical foundation for reasoning about uncertainty. Below is a structured summary of core axioms, formulas, and fundamental theorems.\n\n## 1. The Core Axioms (Kolmogorov)\n\nLet Ω denote the sample space, and E be an event within that space:\n\n1. **Non-negativity:** P(E) ≥ 0 for every event E.\n2. **Unitarity:** P(Ω) = 1.\n3. **Additivity:** For any mutually exclusive events E₁, E₂, ...,\n   P(∪ Eᵢ) = Σ P(Eᵢ)\n\n---\n\n## 2. Conditional Probability & Independence\n\nThe conditional probability of an event A given that event B has occurred (P(B) > 0) is defined as:\n\nP(A | B) = P(A ∩ B) / P(B)\n\nTwo events A and B are **statistically independent** if and only if:\n\nP(A ∩ B) = P(A) × P(B)\n\nWhich also implies P(A | B) = P(A) when P(B) > 0.\n\n---\n\n## 3. Bayes' Theorem\n\nBayes' theorem relates current beliefs to prior knowledge:\n\nP(A | B) = [P(B | A) · P(A)] / P(B)\n\nWhen generalized over a partition of disjoint hypotheses A₁, A₂, ..., Aₖ that cover Ω:\n\nP(Aᵢ | B) = [P(B | Aᵢ) P(Aᵢ)] / [Σ P(B | Aⱼ) P(Aⱼ)]\n\n---\n\n## 4. Key Distributions\n\n* **Bernoulli Distribution:** Single trial with probability of success p.\n  E[X] = p, Var(X) = p(1-p)\n* **Binomial Distribution:** n independent Bernoulli trials.\n  P(X = k) = (n choose k) pᵏ (1-p)ⁿ⁻ᵏ\n* **Poisson Distribution:** Event frequency in continuous intervals.\n  P(X = k) = (λᵏ e⁻λ) / k!\n\n*Archive Note: Keep this card handy for statistics revisions and algorithmic problem solving.*",
+      "title": "hi",
+      "description": "hi",
+      "content": "ddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddd\nd\ndd\n\nd\n\nd\nd\nd\n\nd\nd\n\ndd\nd\nd\nd\nd\nd\nd\nd\n\ndddddddddddddddddddddd\nd\nd\nd\nd\n\nd\nd\nd\nd\ndd\nd\nd\nd\nd\nd\nddd\nd",
       "createdAt": "2026-09-14",
-      "readTime": "3 min"
-    },
-    {
-      "id": "P002",
-      "title": "Quantum Computing Basics",
-      "description": "Introduction to qubits, superposition, entanglement, and quantum logic gates.",
-      "content": "# Quantum Computing Basics\n\nQuantum computing harnesses phenomena from quantum mechanics to process complex computational information in ways classical bits never could.\n\n## Classical Bits vs. Qubits\n\nIn classical computing, the fundamental unit of information is a bit, which can strictly reside in either state 0 or state 1.\n\nA quantum bit (qubit), in contrast, exists as a two-level quantum mechanical system. Its state |ψ⟩ can be written as a linear superposition:\n\n|ψ⟩ = α|0⟩ + β|1⟩\n\nWhere α and β are complex probability amplitudes satisfying:\n\n|α|² + |β|² = 1\n\n---\n\n## Essential Quantum Principles\n\n### 1. Superposition\nA qubit does not simply hold 0 or 1; it occupies a probability sphere (Bloch Sphere) until measurement collapses its state.\n\n### 2. Entanglement\nTwo or more qubits can become entangled such that the quantum state of one instantly dictates the state of the other, regardless of physical distance:\n\n|Φ⁺⟩ = (|00⟩ + |11⟩) / √2\n\n### 3. Quantum Interference\nQuantum algorithms steer probability amplitudes so constructive interference magnifies the correct solutions while destructive interference cancels incorrect ones.\n\n---\n\n## Fundamental Quantum Gates\n\n* **Pauli-X Gate:** The quantum NOT gate, flipping |0⟩ ↔ |1⟩.\n* **Hadamard Gate (H):** Creates equal superposition from a basis state.\n  H|0⟩ = (|0⟩ + |1⟩) / √2\n* **CNOT Gate:** Entangles two qubits based on a control condition.\n\nQuantum computing represents a paradigm shift for cryptography, material discovery, and combinatorial optimization.",
-      "createdAt": "2026-09-15",
-      "readTime": "4 min"
-    },
-    {
-      "id": "P003",
-      "title": "Job Readiness & Technical Interview Playbook",
-      "description": "Strategic framework for software engineering interviews, portfolio building, and system design.",
-      "content": "# Job Readiness & Technical Interview Playbook\n\nLanding top-tier technical roles requires a synthesis of problem-solving rigor, crisp communication, and clear engineering stewardship.\n\n## 1. The 4-Pillar Strategy\n\n1. **Data Structures & Algorithms (DSA):**\n   Focus on pattern recognition rather than memorizing individual problems.\n   - Sliding Window & Two Pointers\n   - Fast & Slow Pointers (Cycle Detection)\n   - Monotonic Stack\n   - Tree Traversal & BFS/DFS on Graphs\n   - Dynamic Programming (Memoization vs. Tabulation)\n\n2. **System Design & Architecture:**\n   - Understand latency vs. throughput trade-offs.\n   - Master database partitioning, caching (Redis), and event queues (Kafka).\n   - Know when to apply SQL ACID guarantees versus NoSQL horizontal scale.\n\n3. **Behavioral & Leadership (STAR Method):**\n   - **Situation:** Set the business context.\n   - **Task:** Clarify your specific responsibility.\n   - **Action:** Highlight technical initiatives you directly led.\n   - **Result:** Quantify impact (e.g., 'reduced p99 latency by 38%').\n\n4. **Proof of Craft (Public Archive & Portfolio):**\n   - High quality, well-documented open source projects.\n   - Clean commit logs and architectural design docs.\n   - Deployed, working prototypes like TextCast demonstrating end-to-end polish.\n\n---\n\n## Daily Checklist for Interview Season\n\n- [x] Solve 1 medium algorithmic problem and articulate complexity in Big-O notation.\n- [x] Read 1 real-world engineering blog (e.g., Uber, Discord, Netflix engineering).\n- [x] Refactor existing code with clean separation of concerns and robust error handling.\n\nStay consistent, stay curious, and let your craftsmanship speak for itself.",
-      "createdAt": "2026-09-16",
-      "readTime": "3 min"
-    },
-    {
-      "id": "P004",
-      "title": "Clean Code & Software Architecture Principles",
-      "description": "Solid principles, modular design, defensive programming, and writing code for humans.",
-      "content": "# Clean Code & Software Architecture Principles\n\nPrograms must be written for people to read, and only incidentally for machines to execute.\n\n## Core Principles\n\n### 1. Single Responsibility (SRP)\nA module or class should have one, and only one, reason to change. Decouple presentation logic from data stores.\n\n### 2. Don't Repeat Yourself (DRY)\nAvoid duplicate logic. Express concepts once in an authoritative, unambiguous representation.\n\n### 3. Open / Closed Principle (OCP)\nSoftware entities should be open for extension, but closed for modification. Use interfaces and composition over fragile inheritance hierarchies.\n\n---\n\n## Practical Guidelines\n\n* **Meaningful Names:** Variable names should explain intent. `daysUntilExpiration` is vastly superior to `d`.\n* **Small Functions:** A function should do one thing and do it exceptionally well.\n* **Minimize Side Effects:** Pure functions make code predictable and trivially testable.\n* **Error Handling is Not an Afterthought:** Handle edge cases gracefully and keep error handling distinct from core logic.\n\nWrite code that future maintainers will thank you for.",
-      "createdAt": "2026-09-17",
-      "readTime": "2 min"
+      "readTime": "1 min"
     }
   ]
 }
