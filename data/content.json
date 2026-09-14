@@ -1,1 +1,12 @@
-
+{
+  "posts": [
+    {
+      "id": "P001",
+      "title": "subject Registration",
+      "description": "SEM-1",
+      "content": "B1-\nProbability & Statistics- CUTM1005 \nOptics and Optical Fibres- CUTM1007 \nJob Readiness - CUTM0001\nEnvironment Science-CUTM1674 \n\nB2 -\nGender, Human Rights and Ethics-\nCUTM1014\n\nB4 - \nElectronic devices and systems- CUTM1046 \n\nB5 - \nIntroduction to Quantum Computing-CUTM3079 \nIntroduction to block chain -CUBD1091\n\nGeneral - \nContributory Course -CUVA0017",
+      "createdAt": "2026-09-14",
+      "readTime": "1 min"
+    }
+  ]
+}
