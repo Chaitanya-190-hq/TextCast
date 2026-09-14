@@ -1,12 +1,5 @@
 {
   "posts": [
-    {
-      "id": "P001",
-      "title": "hi",
-      "description": "hi",
-      "content": "ddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddd\nd\ndd\n\nd\n\nd\nd\nd\n\nd\nd\n\ndd\nd\nd\nd\nd\nd\nd\nd\n\ndddddddddddddddddddddd\nd\nd\nd\nd\n\nd\nd\nd\nd\ndd\nd\nd\nd\nd\nd\nddd\nd",
-      "createdAt": "2026-09-14",
-      "readTime": "1 min"
-    }
+    
   ]
 }
