@@ -12,7 +12,17 @@
   const CONFIG = {
     contentUrl: 'data/content.json',
     storageKey: 'textcast_custom_posts',
-    themeKey: 'textcast_theme'
+    themeKey: 'textcast_theme',
+    paletteKey: 'textcast_palette'
+  };
+
+  const PALETTE_COLORS = {
+    indigo: '#4f46e5',
+    emerald: '#10b981',
+    rose: '#f43f5e',
+    sepia: '#d97706',
+    ocean: '#0284c7',
+    cyber: '#a855f7'
   };
 
   const state = {
@@ -22,7 +32,9 @@
     searchQuery: '',
     currentSort: 'newest',
     currentMonth: 'all',
-    theme: 'light'
+    theme: 'light',
+    palette: 'indigo',
+    mode: 'light'
   };
 
   // =========================================================================
@@ -36,9 +48,19 @@
     archiveView: document.getElementById('archiveView'),
     readingView: document.getElementById('readingView'),
 
-    // Header & Theme
+    // Header, Clear Cache & Theme
+    clearCacheBtn: document.getElementById('clearCacheBtn'),
+    clearCacheIcon: document.getElementById('clearCacheIcon'),
+    clearCacheModal: document.getElementById('clearCacheModal'),
+    cancelClearCacheBtn: document.getElementById('cancelClearCacheBtn'),
+    confirmClearCacheBtn: document.getElementById('confirmClearCacheBtn'),
+
     themeToggle: document.getElementById('themeToggle'),
     themeIcon: document.getElementById('themeIcon'),
+    themeActiveDot: document.getElementById('themeActiveDot'),
+    themePopover: document.getElementById('themePopover'),
+    modeLightBtn: document.getElementById('modeLightBtn'),
+    modeDarkBtn: document.getElementById('modeDarkBtn'),
     logoBtn: document.getElementById('logoBtn'),
 
     // Stats
@@ -507,40 +529,151 @@
   // Theme Management
   // =========================================================================
   function initTheme() {
-    const saved = localStorage.getItem(CONFIG.themeKey);
-    const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
-    const theme = saved || (prefersDark ? 'dark' : 'light');
+    let savedPalette = localStorage.getItem(CONFIG.paletteKey) || 'indigo';
+    let savedMode = localStorage.getItem(CONFIG.themeKey);
 
-    setTheme(theme);
+    // Migration / compatibility check
+    if (savedMode && savedMode.includes('-')) {
+      const parts = savedMode.split('-');
+      savedPalette = parts[0] || 'indigo';
+      savedMode = parts[1] || 'light';
+    } else if (!savedMode) {
+      const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+      savedMode = prefersDark ? 'dark' : 'light';
+    }
+
+    if (!PALETTE_COLORS[savedPalette]) {
+      savedPalette = 'indigo';
+    }
+
+    setTheme(savedPalette, savedMode);
   }
 
-  function toggleTheme() {
-    const current = document.documentElement.getAttribute('data-theme') || 'light';
-    const next = current === 'dark' ? 'light' : 'dark';
-    setTheme(next);
+  function setTheme(palette, mode) {
+    state.palette = palette;
+    state.mode = mode;
+    state.theme = mode;
+
+    document.documentElement.setAttribute('data-palette', palette);
+    document.documentElement.setAttribute('data-mode', mode);
+    document.documentElement.setAttribute('data-theme', `${palette}-${mode}`);
+
+    localStorage.setItem(CONFIG.paletteKey, palette);
+    localStorage.setItem(CONFIG.themeKey, mode);
+
+    // Update Theme Active Dot color
+    if (dom.themeActiveDot) {
+      dom.themeActiveDot.style.background = PALETTE_COLORS[palette] || 'var(--accent)';
+    }
+
+    // Update Mode Buttons in Popover
+    if (dom.modeLightBtn && dom.modeDarkBtn) {
+      dom.modeLightBtn.classList.toggle('active', mode === 'light');
+      dom.modeDarkBtn.classList.toggle('active', mode === 'dark');
+    }
+
+    // Update Palette Buttons in Popover
+    if (dom.themePopover) {
+      const paletteBtns = dom.themePopover.querySelectorAll('.palette-option-btn');
+      paletteBtns.forEach(btn => {
+        const p = btn.getAttribute('data-palette');
+        btn.classList.toggle('active', p === palette);
+      });
+    }
+
+    // Update Header Theme Icon
+    if (dom.themeIcon) {
+      if (mode === 'dark') {
+        dom.themeIcon.innerHTML = `
+          <circle cx="12" cy="12" r="5"></circle>
+          <line x1="12" y1="1" x2="12" y2="3"></line>
+          <line x1="12" y1="21" x2="12" y2="23"></line>
+          <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+          <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+          <line x1="1" y1="12" x2="3" y2="12"></line>
+          <line x1="21" y1="12" x2="23" y2="12"></line>
+          <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+          <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+        `;
+      } else {
+        dom.themeIcon.innerHTML = `
+          <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
+        `;
+      }
+    }
   }
 
-  function setTheme(theme) {
-    state.theme = theme;
-    document.documentElement.setAttribute('data-theme', theme);
-    localStorage.setItem(CONFIG.themeKey, theme);
+  // =========================================================================
+  // Clear Cache Functionality
+  // =========================================================================
+  function openClearCacheModal() {
+    if (dom.clearCacheModal) {
+      dom.clearCacheModal.classList.add('open');
+    }
+  }
 
-    if (theme === 'dark') {
-      dom.themeIcon.innerHTML = `
-        <circle cx="12" cy="12" r="5"></circle>
-        <line x1="12" y1="1" x2="12" y2="3"></line>
-        <line x1="12" y1="21" x2="12" y2="23"></line>
-        <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
-        <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
-        <line x1="1" y1="12" x2="3" y2="12"></line>
-        <line x1="21" y1="12" x2="23" y2="12"></line>
-        <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
-        <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
-      `;
-    } else {
-      dom.themeIcon.innerHTML = `
-        <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
-      `;
+  function closeClearCacheModal() {
+    if (dom.clearCacheModal) {
+      dom.clearCacheModal.classList.remove('open');
+    }
+  }
+
+  async function handleClearCache() {
+    if (dom.clearCacheIcon) {
+      dom.clearCacheIcon.classList.add('spinning');
+    }
+
+    try {
+      // 1. Remove local custom posts
+      localStorage.removeItem(CONFIG.storageKey);
+
+      // 2. Clear sessionStorage
+      sessionStorage.clear();
+
+      // 3. Clean CacheStorage if available
+      if ('caches' in window) {
+        try {
+          const cacheKeys = await caches.keys();
+          await Promise.all(cacheKeys.map(key => caches.delete(key)));
+        } catch (cErr) {
+          console.warn('CacheStorage cleanup:', cErr);
+        }
+      }
+
+      // 4. Force re-fetch data/content.json with cache-busting timestamp
+      const freshUrl = `${CONFIG.contentUrl}?_t=${Date.now()}`;
+      let basePosts = [];
+
+      const response = await fetch(freshUrl, { cache: 'no-store' });
+      if (response.ok) {
+        const data = await response.json();
+        if (Array.isArray(data.posts)) {
+          basePosts = data.posts;
+        }
+      }
+
+      state.posts = basePosts;
+      populateMonthFilter();
+      updateMetrics();
+      applyFiltersAndSort();
+
+      // If viewing a post that no longer exists, return to archive
+      if (state.currentPost) {
+        const stillExists = state.posts.some(p => p.id.toLowerCase() === state.currentPost.id.toLowerCase());
+        if (!stillExists) {
+          navigateToArchive();
+        }
+      }
+
+      showToast('Cache cleared! Fresh data synchronized with server.', 'success');
+    } catch (err) {
+      console.error('Error clearing cache:', err);
+      showToast('Error refreshing data from server.', 'error');
+    } finally {
+      if (dom.clearCacheIcon) {
+        dom.clearCacheIcon.classList.remove('spinning');
+      }
+      closeClearCacheModal();
     }
   }
 
@@ -551,8 +684,70 @@
     // Hash routing
     window.addEventListener('hashchange', handleRoute);
 
-    // Theme toggle
-    dom.themeToggle.addEventListener('click', toggleTheme);
+    // Clear Cache Modal Events
+    if (dom.clearCacheBtn) {
+      dom.clearCacheBtn.addEventListener('click', openClearCacheModal);
+    }
+    if (dom.cancelClearCacheBtn) {
+      dom.cancelClearCacheBtn.addEventListener('click', closeClearCacheModal);
+    }
+    if (dom.confirmClearCacheBtn) {
+      dom.confirmClearCacheBtn.addEventListener('click', handleClearCache);
+    }
+    if (dom.clearCacheModal) {
+      dom.clearCacheModal.addEventListener('click', (e) => {
+        if (e.target === dom.clearCacheModal) {
+          closeClearCacheModal();
+        }
+      });
+    }
+
+    // Theme Popover Menu Events
+    if (dom.themeToggle) {
+      dom.themeToggle.addEventListener('click', (e) => {
+        e.stopPropagation();
+        if (dom.themePopover) {
+          dom.themePopover.classList.toggle('open');
+        }
+      });
+    }
+
+    // Close Theme Popover on outside click
+    document.addEventListener('click', (e) => {
+      if (dom.themePopover && dom.themePopover.classList.contains('open')) {
+        if (!dom.themePopover.contains(e.target) && !dom.themeToggle.contains(e.target)) {
+          dom.themePopover.classList.remove('open');
+        }
+      }
+    });
+
+    // Mode Toggle Buttons
+    if (dom.modeLightBtn) {
+      dom.modeLightBtn.addEventListener('click', (e) => {
+        e.stopPropagation();
+        setTheme(state.palette, 'light');
+      });
+    }
+    if (dom.modeDarkBtn) {
+      dom.modeDarkBtn.addEventListener('click', (e) => {
+        e.stopPropagation();
+        setTheme(state.palette, 'dark');
+      });
+    }
+
+    // Palette Options List
+    if (dom.themePopover) {
+      const paletteBtns = dom.themePopover.querySelectorAll('.palette-option-btn');
+      paletteBtns.forEach(btn => {
+        btn.addEventListener('click', (e) => {
+          e.stopPropagation();
+          const chosenPalette = btn.getAttribute('data-palette');
+          if (chosenPalette) {
+            setTheme(chosenPalette, state.mode);
+          }
+        });
+      });
+    }
 
     // Search input (debounced)
     let debounceTimer;
@@ -610,9 +805,19 @@
 
     // Keyboard Shortcuts
     document.addEventListener('keydown', (e) => {
-      // Escape closes reading view
-      if (e.key === 'Escape' && dom.readingView.style.display === 'block') {
-        navigateToArchive();
+      // Escape closes modal, popover, or reading view
+      if (e.key === 'Escape') {
+        if (dom.clearCacheModal && dom.clearCacheModal.classList.contains('open')) {
+          closeClearCacheModal();
+          return;
+        }
+        if (dom.themePopover && dom.themePopover.classList.contains('open')) {
+          dom.themePopover.classList.remove('open');
+          return;
+        }
+        if (dom.readingView.style.display === 'block') {
+          navigateToArchive();
+        }
       }
       // '/' focuses search when in archive
       if (e.key === '/' && dom.archiveView.style.display !== 'none' && document.activeElement !== dom.searchInput) {

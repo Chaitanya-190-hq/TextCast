@@ -22,7 +22,23 @@ TextCast is a public digital archive where every uploaded text file transforms i
   - Filter by **Month** (dynamically extracted from archived cards).
   - Total uploads & archive reading time metrics.
   - **Recently Added Spotlight**: Features the latest card on top with quick read actions.
-- **Dark & Light Themes**: Polished Obsidian dark mode and Pearl light mode with system preference auto-detection and persistence.
+- **Clear Cache & Real-Time Sync**:
+  - Global "Clear Cache" button with safe glassmorphic confirmation modal dialog.
+  - Clears `localStorage`, `sessionStorage`, and `CacheStorage` API caches.
+  - Forces a fresh, cache-busted fetch of `data/content.json` (`cache: 'no-store'`).
+  - Seamlessly re-renders the gallery and recalibrates IDs without requiring a hard page reload.
+- **Multi-Color Theme System (6 Curated Palettes)**:
+  - Floating **Theme Popover** menu in the header with live color swatches and active checkmarks.
+  - **Light & Dark Mode** quick toggle.
+  - 6 aesthetic palettes:
+    - 🟣 **Indigo Luxury** (Linear & Apple default luxury)
+    - 🟢 **Emerald Forest** (Fresh sage & deep pine focus)
+    - 🌹 **Sunset Rose** (Velvet crimson & warm coral)
+    - 📜 **Warm Sepia** (Vintage book parchment & espresso)
+    - 🌊 **Nordic Ocean** (Arctic cyan & deep navy)
+    - ⚡ **Midnight Cyber** (Dark synthwave neon violet)
+  - Ambient background glow automatically shifts to the active palette's accent color.
+  - Preference persistence in `localStorage` across both archive and admin views.
 
 ### Admin Studio (`admin.html`)
 - **Drag & Drop .txt File Upload**: Simply drag and drop any plain text file. TextCast extracts the title, preview text, and full content automatically.
@@ -32,6 +48,7 @@ TextCast is a public digital archive where every uploaded text file transforms i
 - **Live Card Preview**: Preview exactly how the card will look in the gallery before publishing.
 - **Non-Destructive Publishing**: New cards are appended to the archive without overwriting previous uploads.
 - **Export & Commit (`content.json`)**: Download the updated `content.json` file or copy the JSON structure with 1 click to commit to your GitHub repository.
+- **Clear Local Cache Action**: Quickly wipe browser-saved draft cards and reset to base archive.
 
 ---
 
