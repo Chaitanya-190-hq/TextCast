@@ -53,13 +53,13 @@
 
   <!-- Admin Main Content -->
   <main class="container-narrow admin-wrapper" role="main">
-    <header class="hero-header" style="margin-bottom: 2rem;">
+    <header class="hero-header">
       <div class="hero-badge-row">
         <span class="badge badge-id" id="assignedIdBadge">Next ID: P005</span>
         <span class="badge" id="liveReadTimeBadge">1 min read</span>
         <span class="badge" id="liveWordCountBadge">0 words</span>
       </div>
-      <h1 class="hero-title" style="font-size: 2.4rem;">Publish New Card</h1>
+      <h1 class="hero-title hero-title-compact">Publish New Card</h1>
       <p class="hero-subtitle">
         Upload a plain <code>.txt</code> file or paste text content manually. TextCast automatically computes read times, generates a unique card ID, and appends it to your archive.
       </p>
@@ -70,11 +70,11 @@
       <!-- Tabs: File Upload vs Manual Paste -->
       <div class="admin-tabs" role="tablist">
         <button class="admin-tab-btn active" id="tabUploadBtn" type="button" role="tab" aria-selected="true">
-          <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="vertical-align: middle; margin-right: 4px;"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="17 8 12 3 7 8"></polyline><line x1="12" y1="3" x2="12" y2="15"></line></svg>
+          <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="17 8 12 3 7 8"></polyline><line x1="12" y1="3" x2="12" y2="15"></line></svg>
           Upload .txt File
         </button>
         <button class="admin-tab-btn" id="tabPasteBtn" type="button" role="tab" aria-selected="false">
-          <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="vertical-align: middle; margin-right: 4px;"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="16" y1="13" x2="8" y2="13"></line><line x1="16" y1="17" x2="8" y2="17"></line></svg>
+          <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="16" y1="13" x2="8" y2="13"></line><line x1="16" y1="17" x2="8" y2="17"></line></svg>
           Paste Text Manually
         </button>
       </div>
@@ -90,27 +90,27 @@
             </svg>
           </div>
           <div>
-            <strong style="color: var(--text-primary); font-size: 1rem;">Drag & drop your .txt file here</strong>
-            <p style="color: var(--text-muted); font-size: 0.82rem; margin-top: 2px;">or click to browse from your computer</p>
+            <strong class="dropzone-title">Drag & drop your .txt file here</strong>
+            <p class="dropzone-hint">or click to browse from your computer</p>
           </div>
           <input type="file" id="fileInput" accept=".txt,text/plain" style="display: none;">
         </div>
 
         <div class="upload-file-status" id="uploadFileStatus">
-          <div style="display: flex; align-items: center; gap: 0.5rem;">
+          <div class="file-status-main">
             <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline></svg>
             <span id="uploadedFileName">filename.txt</span>
           </div>
-          <button type="button" class="btn btn-ghost" id="removeFileBtn" style="padding: 0.2rem 0.5rem; font-size: 0.75rem;">Clear File</button>
+          <button type="button" class="btn btn-ghost btn-sm" id="removeFileBtn">Clear File</button>
         </div>
       </div>
 
       <!-- Form Inputs -->
-      <div style="margin-top: 1.75rem;">
+      <div class="admin-form-fields">
         <div class="form-group">
           <label class="form-label" for="titleInput">
             Card Title
-            <span style="color: var(--accent);">* Required</span>
+            <span class="required-tag">* Required</span>
           </label>
           <input
             type="text"
@@ -141,7 +141,7 @@
         <div class="form-group">
           <label class="form-label" for="contentInput">
             Full Content (Plain Text or Markdown)
-            <span style="color: var(--accent);">* Required</span>
+            <span class="required-tag">* Required</span>
           </label>
           <textarea
             class="form-textarea"
@@ -154,7 +154,7 @@
       </div>
 
       <!-- Action Buttons -->
-      <div style="display: flex; gap: 0.75rem; flex-wrap: wrap; margin-top: 1.75rem; align-items: center;">
+      <div class="admin-action-row">
         <button class="btn btn-primary" id="publishBtn" type="button">
           <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
             <polyline points="20 6 9 17 4 12"></polyline>
@@ -179,14 +179,14 @@
           Download content.json
         </button>
 
-        <button class="btn btn-ghost" id="clearFormBtn" type="button" style="margin-left: auto;">
+        <button class="btn btn-ghost" id="clearFormBtn" type="button">
           Reset Form
         </button>
       </div>
 
       <!-- Live Card Preview -->
       <div class="admin-preview-box" id="adminPreviewBox">
-        <div class="section-label" style="margin-bottom: 0.75rem;">
+        <div class="section-label">
           <span class="section-label-text">
             <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><line x1="12" y1="8" x2="12" y2="12"></line><line x1="12" y1="16" x2="12.01" y2="16"></line></svg>
             Gallery Card Preview
@@ -199,7 +199,7 @@
     </div>
 
     <!-- Existing Cards Manager List -->
-    <section style="margin-top: 3.5rem;">
+    <section class="admin-section">
       <div class="section-label">
         <span class="section-label-text">
           <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="8" y1="6" x2="21" y2="6"></line><line x1="8" y1="12" x2="21" y2="12"></line><line x1="8" y1="18" x2="21" y2="18"></line><line x1="3" y1="6" x2="3.01" y2="6"></line><line x1="3" y1="12" x2="3.01" y2="12"></line><line x1="3" y1="18" x2="3.01" y2="18"></line></svg>
@@ -207,8 +207,8 @@
         </span>
       </div>
 
-      <div class="admin-card" style="padding: 1rem 1.5rem;">
-        <div id="cardsListContainer" style="display: flex; flex-direction: column; gap: 0.75rem;">
+      <div class="admin-card admin-card--compact">
+        <div id="cardsListContainer" class="stack-list">
           <!-- Dynamically populated -->
         </div>
       </div>
